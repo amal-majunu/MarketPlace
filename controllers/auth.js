@@ -2,17 +2,27 @@ require('dotenv').config();
 //const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const User = require("../models/user");
+const multer = require("multer");
+const cloudinary = require("cloudinary").v2;
+const Products = require("../models/Product");
+
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key:process.env.API_KEY,
+    api_secret:process.env.API_SECRET
+  });
 
 exports.login = async (req,res) => {
     try {
         console.log(req.body);     
-        let email = req.body.email;
+        let username = req.body.username;
         let password = req.body.password;
-        User.findOne({email:email},(err,doc)=>{
+        User.findOne({username:username},(err,doc)=>{
             if(err){
                 console.log(err);
             }else{
                 if(doc){
+                   // console.log(doc);
                     passport.authenticate('user', function (err, user, info) {
                         if (err) {
                             console.log(err);
@@ -28,8 +38,9 @@ exports.login = async (req,res) => {
                             });
                         }
                     })(req, res); 
+                    
                 }else{
-                    res.render("login", {message : 'No such email is registered!!'});
+                    res.render("login", {message : 'No such username is registered!!'});
                 }
             }
         });        
@@ -39,8 +50,7 @@ exports.login = async (req,res) => {
 };
 
 exports.register = async (req,res) => {
-    try {
-        console.log(req.body);  
+    try { 
         let username = req.body.username;
         let email = req.body.email;
         let password = req.body.password;
@@ -52,15 +62,25 @@ exports.register = async (req,res) => {
                 }else if(doc){
                     res.render("register", {message : 'Email already exists!!'});
                 }else{
-                    User.register({username:username,email:email},password,(err,user)=>{
+                    User.findOne({username:username},(err,doc)=>{
                         if(err){
-                            res.render("register",{message : 'Some error occured!!'});
+                            console.log(err);
+                        }else if(doc){
+                            res.render("register", {message : 'Username already exists!!'});
                         }
                         else{
-                            passport.authenticate('user')(req,res,function(){
-                                res.redirect("/main");
+                            User.register({username:username,email:email},password,(err,user)=>{
+                                if(err){
+                                    res.render("register",{message : 'Some error occured!!'});
+                                }
+                                else{
+                                    passport.authenticate('user')(req,res,function(){
+                                        res.redirect("/main");
+                                    });
+                                }
                             });
-                        }
+                        }                   
+
                     });
                 }
             });
@@ -69,5 +89,37 @@ exports.register = async (req,res) => {
         }              
     } catch (error) {
         console.log(error);        
+    }
+};
+
+exports.add = async (req,res)=>{
+    let file = req.file;
+    let name = req.body.title;
+    let quan = req.body.quan;
+    let desc = req.body.desc;  
+    let price = req.body.price;
+    if(name === ""||desc === ""||quan === ""||price === ""||typeof(file) === "undefined"){
+        res.render("add", {file:0,user:req.user});
+    }else{
+        cloudinary.uploader.upload(req.file.path, (err,result) => { 
+            if(err){
+                console.log(err);
+            }else{
+                let urlCreated = result.secure_url;  
+                let product = new Products({
+                    imageURL : urlCreated,
+                    name : name,
+                    quan : quan,
+                    desc : desc,
+                    price : price,
+                    owner : req.user.username
+                });
+                product.save();
+                req.user.products.push(product);
+                req.user.save();
+                console.log(req.user);
+                res.redirect("/main");
+            }
+        });
     }
 };

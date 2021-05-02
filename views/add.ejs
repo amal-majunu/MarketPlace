@@ -66,24 +66,48 @@
     </div>
   </div>
 </nav>
-
 <main class="container">
-  <div class="profile">
-      <div class="content">
-          <div class="pic">
-              <img class="prof-pic" src="/css/user1.jpg" height="230" width="230">
-          </div>
-          <div class="details">
-            <h2>Profile</h2>
-            <ul class="det">
-                <li>Username : <span class="data"><%= user.username %></span></li>
-                <li>Email : <span class="data"><%= user.email %></span</li>
-            </ul>
-            <a href="/add" class="bt">Add Products</a>
-          </div>
-      </div>
-  </div>
+    <form action="/auth/add" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+        <div class="form-group">
+            <label for="title">Item name:</label>
+            <input class="form-control" type="text" placeholder="Item Name" id="title" name="title" value="">
+            <% if(file === 0){ %>
+            <div class="invalid">*All fields are required!!</div>
+            <% } %>
+        </div>
+        <div class="form-group">
+            <label for="FormControlFile1">Image:</label>
+            <input type="file" class="form-control-file" id="FormControlFile1" name="file">
+            <% if(file === 0){ %>
+              <span id="file">*Please add Image</span>
+              <% } %>
+        </div>
+        <div class="form-group">
+            <label for="FormControlTextarea1">Description:</label>
+            <textarea class="form-control" id="FormControlTextarea1" rows="3" name="desc" ></textarea>
+            <% if(file === 0){ %>
+            <div class="invalid">*All fields are required!!</div>
+            <% } %>
+        </div>
+        <div class="form-group">
+            <label for="FormControlNumber">Quantity:</label>
+            <input type="number" class="form-control" id="FormControlNumber" rows="3" name="quan" value="">
+            <% if(file === 0){ %>
+            <div class="invalid">*All fields are required!!</div>
+            <% } %>
+        </div>
+        <div class="form-group">
+            <label for="isbn">Price:</label>
+            <input class="form-control" type="number" placeholder="Price in $" id="price" name="price" value="">
+            <% if(file === 0){ %>
+            <div class="invalid">*All fields are required!!</div>
+            <% } %>
+        </div>
+        <div class="add">
+            <button type="submit" class="btn btn-dark">Add Book</button>
+        </div>
+    </form>
 </main>
-    <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
-  </body>
+<script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+</body>
 </html>
