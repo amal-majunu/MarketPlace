@@ -9,7 +9,11 @@ const productSchema = new mongoose.Schema({
       type: Number,
       min: 1,
       max: 5,
-      default : 0
+      default : 1
+  },
+  rateCount : {
+    type : Number,
+    default : 0
   },
   owner: String,
   imageURL : String

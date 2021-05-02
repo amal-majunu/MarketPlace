@@ -101,7 +101,7 @@ exports.add = async (req,res)=>{
     if(name === ""||desc === ""||quan === ""||price === ""||typeof(file) === "undefined"){
         res.render("add", {file:0,user:req.user});
     }else{
-        cloudinary.uploader.upload(req.file.path, (err,result) => { 
+        cloudinary.uploader.upload(req.file.path, async (err,result) => { 
             if(err){
                 console.log(err);
             }else{
@@ -115,10 +115,18 @@ exports.add = async (req,res)=>{
                     owner : req.user.username
                 });
                 product.save();
-                req.user.products.push(product);
-                req.user.save();
-                console.log(req.user);
-                res.redirect("/main");
+                console.log(product);
+
+                await Products.findOne(product,(err,doc)=>{
+                    if(err){
+                        console.log(err);
+                    }else if(doc){
+                        req.user.products.push(doc._id);
+                        req.user.save();
+                        console.log(req.user);
+                        res.redirect("/main");
+                    }
+                });
             }
         });
     }
