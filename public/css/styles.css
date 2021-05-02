@@ -1,4 +1,29 @@
 body {
     min-height: 75rem;
     padding-top: 4.5rem;
+    text-align: center;
+  }
+
+  .content{
+    display: inline-flex;
+    margin-top: 10%;
+    padding:10px;
+  }
+  .profile{
+    text-align: center;
+  }
+  .pic{
+    margin-right: 10px;
+  }
+  .details{
+    margin-left: 10px;
+  }
+
+  .prof-pic{
+    border-radius: 100%;
+  }
+  .det{
+    text-align: left;
+    font-size: 30px;
+    list-style-type: none;
   }

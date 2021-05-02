@@ -56,22 +56,33 @@
           <a class="nav-link" href="#">Products</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/login">Login</a>
+            <a class="nav-link" href="/cart">View Cart</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/register">Register</a>
-          </li>
+        
       </ul>
       <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+        <a href="/logout" class="btn btn-outline-success" type="submit">Logout</a>
       </form>
     </div>
   </div>
 </nav>
 
 <main class="container">
-  
+  <div class="profile">
+      <div class="content">
+          <div class="pic">
+              <img class="prof-pic" src="/css/user1.jpg" height="230" width="230">
+          </div>
+          <div class="details">
+            <h2>Profile</h2>
+            <ul class="det">
+                <li>Username : </li>
+                <li>Email : </li>
+                <li>Products Owned : </li>
+            </ul>
+          </div>
+      </div>
+  </div>
 </main>
     <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
   </body>
