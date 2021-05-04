@@ -9,7 +9,8 @@ const userSchema = new mongoose.Schema({
         default : 'user1.jpg'
     },
     password : String,
-    products : Array
+    products : Array,
+    products1 : Array
 });
 
 userSchema.plugin(passportLocalMongoose);
