@@ -8,7 +8,8 @@ const passport = require("passport");
 const LocalStrategy    = require('passport-local').Strategy;
 mongoose.connect("mongodb://localhost:27017/usersdb",
   {useNewUrlParser:true,
-  useUnifiedTopology: true});
+  useUnifiedTopology: true,
+  useFindAndModify: false });
 
 const User = require("./models/user");
 

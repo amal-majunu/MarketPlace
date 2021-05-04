@@ -13,6 +13,15 @@ router.get("/register", (req,res)=>{
     res.render("register", {message:''});
 });
 
+router.get("/edit", (req,res)=>{
+    let user = {
+        name : req.user.username,
+        email : req.user.email,
+        message : ''
+    }
+    res.render("edit", user);
+});
+
 router.get("/main", (req,res)=>{
    if(req.isAuthenticated()){
        console.log(req.user);

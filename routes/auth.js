@@ -24,8 +24,9 @@ const storage = multer.diskStorage({
 };
 const uploads = multer({ storage,fileFilter });
 
-router.post("/login",  authController.login);
-router.post("/register",  authController.register);
+router.post("/login", authController.login);
+router.post("/register", authController.register);
 router.post("/add", uploads.single('file'), authController.add);
+router.post("/edit", authController.edit);
 
 module.exports = router;

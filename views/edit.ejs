@@ -50,7 +50,7 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav me-auto mb-2 mb-md-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/main">Main</a>
+          <a class="nav-link" aria-current="page" href="/main">Main</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Products</a>
@@ -67,46 +67,42 @@
   </div>
 </nav>
 <main class="container">
-    <form action="/auth/add" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <form action="/auth/edit" method="POST"  class="needs-validation" novalidate>
         <div class="form-group">
-            <label for="title">Item name:</label>
-            <input class="form-control" type="text" placeholder="Item Name" id="title" name="title" value="">
-            <% if(file === 0){ %>
-            <div class="invalid">*All fields are required!!</div>
-            <% } %>
+            <label for="title">Username</label>
+            <input class="form-control" type="text" placeholder="Item Name" id="title" name="username" value="<%= name %>">
         </div>
         <div class="form-group">
-            <label for="FormControlFile1">Image:</label>
-            <input type="file" class="form-control-file" id="FormControlFile1" name="file">
-            <% if(file === 0){ %>
-              <span id="file">*Please add Image</span>
-              <% } %>
+            <label for="title">Logo:</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="type" id="inlineRadio1" value="user1.jpg" checked>
+                <label class="form-check-label" for="inlineRadio1"><img class="plo" src="/css/user1.jpg" alt="pic1" height="40" width="40"></label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="type" id="inlineRadio2" value="user2.jpg">
+                <label class="form-check-label" for="inlineRadio1"><img class="plo" src="/css/user2.jpg" alt="pic1" height="40" width="40"></label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="type" id="inlineRadio2" value="user3.jpg">
+                <label class="form-check-label" for="inlineRadio1"><img class="plo" src="/css/user3.jpg" alt="pic1" height="40" width="40"></label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="type" id="inlineRadio2" value="user4.png">
+                <label class="form-check-label" for="inlineRadio1"><img class="plo" src="/css/user4.png" alt="pic1" height="40" width="40"></label>
+              </div>
         </div>
         <div class="form-group">
-            <label for="FormControlTextarea1">Description:</label>
-            <textarea class="form-control" id="FormControlTextarea1" rows="3" name="desc" ></textarea>
-            <% if(file === 0){ %>
-            <div class="invalid">*All fields are required!!</div>
-            <% } %>
-        </div>
-        <div class="form-group">
-            <label for="FormControlNumber">Quantity:</label>
-            <input type="number" class="form-control" id="FormControlNumber" rows="3" name="quan" value="">
-            <% if(file === 0){ %>
-            <div class="invalid">*All fields are required!!</div>
-            <% } %>
-        </div>
-        <div class="form-group">
-            <label for="isbn">Price:</label>
-            <input class="form-control" type="number" placeholder="Price in $" id="price" name="price" value="">
-            <% if(file === 0){ %>
-            <div class="invalid">*All fields are required!!</div>
-            <% } %>
+            <label for="FormControlNumber">Email:</label>
+            <input type="email" class="form-control" id="FormControlNumber" rows="3" name="email" value="<%= email %>">
+            
         </div>
         <div class="add">
-            <button type="submit" class="btn btn-dark">Add Product</button>
+          <% if(message){ %>
+            <div class="invalid"><%= message %></div>
+        <% } %>
+            <button type="submit" class="btn btn-dark">Save</button>
         </div>
-    </form>
+    </form> 
 </main>
 <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 </body>

@@ -30,6 +30,7 @@ body {
 
   .bt {
     background: #38f009;
+    margin-right: 10px;
     background-image: -webkit-linear-gradient(top, #38f009, #27c444);
     background-image: -moz-linear-gradient(top, #38f009, #27c444);
     background-image: -ms-linear-gradient(top, #38f009, #27c444);
@@ -55,6 +56,19 @@ body {
     text-decoration: none;
   }
 
+  .bt1 {
+    background: #fd0303;
+    margin-right: 10px;
+    -webkit-border-radius: 28;
+    -moz-border-radius: 28;
+    border-radius: 28px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 17px;
+    padding: 12px 20px 12px 20px;
+    text-decoration: none;
+  }
+
   .needs-validation{
     text-align: left;
     margin-bottom: 40px;
@@ -75,4 +89,8 @@ body {
 .invalid{
   color: red;
   font-size: small;
+}
+
+.plo{
+  border-radius: 100%;
 }

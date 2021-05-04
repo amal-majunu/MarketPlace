@@ -50,7 +50,7 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav me-auto mb-2 mb-md-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
+          <a class="nav-link active" aria-current="page" href="#">Main</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Products</a>
@@ -71,7 +71,7 @@
   <div class="profile">
       <div class="content">
           <div class="pic">
-              <img class="prof-pic" src="/css/user1.jpg" height="230" width="230">
+              <img class="prof-pic" src="/css/<%= user.logo %>" height="250" width="250">
           </div>
           <div class="details">
             <h2>Profile</h2>
@@ -80,6 +80,7 @@
                 <li>Email : <span class="data"><%= user.email %></span</li>
             </ul>
             <a href="/add" class="bt">Add Products</a>
+            <a href="/edit" class="bt1">Edit</a>
           </div>
       </div>
   </div>

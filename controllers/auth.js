@@ -131,3 +131,49 @@ exports.add = async (req,res)=>{
         });
     }
 };
+
+exports.edit = async (req,res)=>{
+    try {
+        let username = req.body.username;
+        let email = req.body.email;
+        let logo = req.body.type;  
+        console.log(req.body);    
+        User.findOne({email : email},(err,doc)=>{
+            if(err){
+                console.log(err);
+            }else if(doc){
+                res.render("edit", {
+                    name : username,
+                    email : email,
+                    message : 'Email already exists!!'
+                });
+            }else{
+                User.findOne({username:username},(err,doc)=>{
+                    if(err){
+                        console.log(err);
+                    }else if(doc){
+                        res.render("edit", {
+                            name : username,
+                            email : email,
+                            message : 'Username already exists!!'
+                        });
+                    }
+                    else{
+                        User.findByIdAndUpdate(req.user._id,{username:username,email:email,logo:logo},{new: true}, (err, doc) => {
+                            if (err) {
+                                console.log("Something wrong when updating data!");
+                            }
+                            else{        
+                            console.log(doc);
+                            res.redirect("/main");
+                            }
+                        });
+                    }                   
+
+                });
+            }
+        });  
+    } catch (err) {
+        console.log(err);        
+    }
+};
