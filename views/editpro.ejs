@@ -50,7 +50,7 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav me-auto mb-2 mb-md-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Main</a>
+          <a class="nav-link active" aria-current="page" href="/main">Main</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/products">Products</a>
@@ -68,45 +68,46 @@
 </nav>
 
 <main class="container">
-  <div class="profile">
-      <div class="content">
-          <div class="pic">
-              <img class="prof-pic" src="/css/<%= user.logo %>" height="250" width="250">
-          </div>
-          <div class="details">
-            <h2>Profile</h2>
-            <ul class="det">
-                <li>Username : <span class="data"><%= user.username %></span></li>
-                <li>Email : <span class="data"><%= user.email %></span</li>
-            </ul>
-            <a href="/add" class="bt">Add Products</a>
-            <a href="/edit" class="bt1">Edit</a>
-          </div>
-      </div>
-  </div>
-</main>
-<h1>Owned Products</h1>
-<main class="container1">
-  <div class="prods">
-    <% prod.forEach(doc => { %>
-    <div class="pro">
-      <div class="pro-content">
-        <img src="<%= doc.imageURL %>" alt="img" height="190" width="190">
-        <ul class="prodet">
-          <li>Name : <span class="det1"><%= doc.name %></span></li>
-          <li>Price : <span class="det1"><%= doc.price %></span></li>
-          <li>Desc : <span class="det1"><%= doc.desc %></span></li>
-          <li>Quantity : <span class="det1"><%= doc.quan %></span></li>
-          <li>Rating : <span class="det1"><%= doc.rating %></span></li>
-        </ul>
-        <a href="/editpro?name=<%= doc.name %>" class="edit">Edit</a>
-        <a href="/delete?id=<%= doc._id %>" class="delete">Remove</a>
-      </div>
-    </div>
-    <% }); %>
-  </div>  
-  <div class="prods">    
-  </div>
+    <form action="/auth/editpro?id=<%= doc._id %>" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+        <div class="form-group">
+            <label for="title">Item name:</label>
+            <input class="form-control" type="text" placeholder="Item Name" id="title" name="name" value="<%= doc.name %>">
+            <% if(file === 0){ %>
+            <div class="invalid">*All fields are required!!</div>
+            <% } %>
+        </div>
+        <div class="form-group">
+            <label for="FormControlFile1">Image:</label>
+            <input type="file" class="form-control-file" id="FormControlFile1" name="file">
+            <% if(file === 0){ %>
+              <span id="file">*Please add Image</span>
+              <% } %>
+        </div>
+        <div class="form-group">
+            <label for="FormControlTextarea1">Description:</label>
+            <textarea class="form-control" id="FormControlTextarea1" rows="3" name="desc" ><%= doc.desc %></textarea>
+            <% if(file === 0){ %>
+            <div class="invalid">*All fields are required!!</div>
+            <% } %>
+        </div>
+        <div class="form-group">
+            <label for="FormControlNumber">Quantity:</label>
+            <input type="number" class="form-control" id="FormControlNumber" rows="3" name="quan" value="<%= doc.quan %>">
+            <% if(file === 0){ %>
+            <div class="invalid">*All fields are required!!</div>
+            <% } %>
+        </div>
+        <div class="form-group">
+            <label for="isbn">Price:</label>
+            <input class="form-control" type="number" placeholder="Price in $" id="price" name="price" value="<%= doc.price %>">
+            <% if(file === 0){ %>
+            <div class="invalid">*All fields are required!!</div>
+            <% } %>
+        </div>
+        <div class="add">
+            <button type="submit" class="btn btn-dark">Save</button>
+        </div>
+    </form>
 </main>
     <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
   </body>

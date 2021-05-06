@@ -106,7 +106,17 @@ exports.add = async (req,res)=>{
                 console.log(err);
             }else{
                 let urlCreated = result.secure_url;  
-                let product = new Products({
+                let product = {
+                    imageURL : urlCreated,
+                    name : name,
+                    quan : quan,
+                    desc : desc,
+                    price : price
+                };
+                req.user.products.push(product);
+                req.user.save();
+
+                let product1 = new Products({
                     imageURL : urlCreated,
                     name : name,
                     quan : quan,
@@ -114,19 +124,8 @@ exports.add = async (req,res)=>{
                     price : price,
                     owner : req.user.username
                 });
-                product.save();
-                console.log(product);
-
-                await Products.findOne(product,(err,doc)=>{
-                    if(err){
-                        console.log(err);
-                    }else if(doc){
-                        req.user.products.push(doc._id);
-                        req.user.save();
-                        console.log(req.user);
-                        res.redirect("/main");
-                    }
-                });
+                product1.save();
+                res.redirect("/main");
             }
         });
     }
@@ -173,6 +172,53 @@ exports.edit = async (req,res)=>{
                 });
             }
         });  
+    } catch (err) {
+        console.log(err);        
+    }
+};
+
+exports.addCart = async (req,res)=>{
+    try {
+        let id = req.query.id;
+        Products.findById(id, (err,doc)=>{
+            if(err){
+                console.log(err);
+            }else{
+                req.user.cart.push(doc);
+                req.user.save();
+            }
+        });     
+    } catch (err) {
+        console.log(err);        
+    }
+};
+
+exports.editpro = async (req,res) => {
+    try {
+        let id = req.query.id;
+        console.log(req.file);
+        Products.findById(id, (err,doc)=>{
+            if(err){
+                console.log(err);
+            }else if(doc){
+                doc.name = req.body.name;
+                doc.desc = req.body.desc;
+                doc.quan = req.body.quan;
+                doc.price = req.body.price;
+                if(req.file !== undefined){
+                    cloudinary.uploader.upload(req.file.path, async (err,result) => { 
+                        if(err){
+                            console.log(err);
+                        }else{
+                            let urlCreated = result.secure_url;
+                            doc.imageURL = urlCreated;
+                        }
+                    });
+                }
+                doc.save();
+                res.redirect("/main");
+            }
+        });
     } catch (err) {
         console.log(err);        
     }
