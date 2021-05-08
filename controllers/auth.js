@@ -184,8 +184,20 @@ exports.addCart = async (req,res)=>{
             if(err){
                 console.log(err);
             }else{
-                req.user.cart.push(doc);
+                let x = doc._doc;
+                console.log(x);
+                let pro = {
+                    incart : 1,
+                    num : 1
+                };
+                let prod = {
+                    ...pro,
+                    ...x
+                }
+                console.log(prod);
+                req.user.cart.push(prod);
                 req.user.save();
+                res.redirect("/products");
             }
         });     
     } catch (err) {
@@ -223,3 +235,31 @@ exports.editpro = async (req,res) => {
         console.log(err);        
     }
 };
+
+exports.buy = async (req,res) => {
+    try {
+        console.log(req.body);   
+    } catch (err) {
+        console.log(err);        
+    }
+};
+
+exports.rcart = async(req,res) => {
+    try {
+        let name = req.query.name;
+        let cart = req.user.cart;
+        console.log(name);
+        cart.forEach(item => {
+            if(item.name === name){
+                cart.pop(item);
+            }            
+        });
+        console.log(cart);
+        req.user.cart = cart;
+        req.user.save();
+        res.redirect("/cart");
+             
+    } catch (err) {
+        console.log(err);        
+    }
+}

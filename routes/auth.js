@@ -29,6 +29,8 @@ router.post("/register", authController.register);
 router.post("/add", uploads.single('file'), authController.add);
 router.post("/edit", authController.edit);
 router.get("/addCart", authController.addCart);
+router.post("/buy", authController.buy);
+router.get("/rcart", authController.rcart);
 router.post("/editpro", uploads.single("file"), authController.editpro);
 
 module.exports = router;

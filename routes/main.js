@@ -30,7 +30,6 @@ router.get("/main", (req,res)=>{
            if(err){
                console.log(err);
            }else{
-               console.log(docs);
                prod = docs;
                res.render("main", {message:'',user:req.user, prod:prod});
            }
@@ -69,7 +68,16 @@ router.get("/products", (req,res)=>{
             }else {
                 docs.forEach(doc => {
                     if(doc.owner !== req.user.username){
-                        prod.push(doc);
+                        let f = 1;
+                        let cart = req.user.cart;
+                        cart.forEach(item => {
+                            if(doc.name === item.name){
+                                f = 0;
+                            }
+                        });
+                        if(f===1){
+                            prod.push(doc);
+                        }
                     }
                 });        
                 res.render("products", {prod:prod});
@@ -99,12 +107,43 @@ router.get("/delete", (req,res)=>{
     }
 });
 
+router.get("/cart", (req,res)=>{
+    if(req.isAuthenticated()){
+        let cart = req.user.cart;
+        let total = 0;
+        cart.forEach(item =>{
+            total += item.price;
+        });
+        res.render("cart",{cart : cart,total : total});
+    }else{
+        res.redirect("/login");
+    }
+});
+
+router.get("/buy", (req,res) =>{
+    if(req.isAuthenticated()){
+        let cart = req.user.cart;
+        let total = 0;
+        cart.forEach(item => {
+            total += item.price;
+        });
+        res.render("buy", {file:1, total:total});  
+    }else{
+        res.redirect("/login");
+    }
+});
+
 router.get("/add", (req,res)=>{
     if(req.isAuthenticated()){
         res.render("add",{file:1,user:req.user});
     }else{
         res.redirect("/login");
     }
+});
+
+router.get("/logout", (req,res) =>{
+    req.logout();
+    res.redirect("/login");
 });
 
 module.exports = router;

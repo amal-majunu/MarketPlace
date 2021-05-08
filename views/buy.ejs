@@ -52,7 +52,7 @@
           <a class="nav-link" aria-current="page" href="/main">Main</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="#">Products</a>
+          <a class="nav-link" href="/products">Products</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="/cart">View Cart</a>
@@ -65,31 +65,57 @@
     </div>
   </div>
 </nav>
-<h1>Products Available</h1>
-  <main class="container">
-    <span class="alert">Product added to Cart</span>
-  </main>
-<main class="container1">
-  <div class="prods">
-    <% prod.forEach(doc => { %>
-    <div class="pro">
-      <div class="pro-content">
-        <img src="<%= doc.imageURL %>" alt="img" height="190" width="190">
-        <ul class="prodet">
-          <li>Name : <span class="det1"><%= doc.name %></span></li>
-          <li>Price : $<span class="det1"><%= doc.price %></span></li>
-          <li>Desc : <span class="det1"><%= doc.desc %></span></li>
-          <li>Quantity : <span class="det1"><%= doc.quan %></span></li>
-          <li>Rating : <span class="det1"><%= doc.rating %></span></li>
-          <li>Owner : <span class="det1"><%= doc.owner %></span></li>
-        </ul>
-        <a href="/auth/addCart?id=<%= doc._id %>"  class="addCart">Add to Cart</a>
-      </div>
-    </div>
-    <% }); %>
-  </div>  
-  <div class="prods">    
-  </div>
+<main class="container">
+    <form action="/auth/buy" method="POST" class="needs-validation" novalidate>
+        <div class="form-group">
+            <label for="title">First Name</label>
+            <input class="form-control" type="text" placeholder="First Name" name="fname" value="">
+            <% if(file === 0){ %>
+            <div class="invalid">*All fields are required!!</div>
+            <% } %>
+        </div>
+        <div class="form-group">
+            <label for="title">Last Name</label>
+            <input class="form-control" type="text" placeholder="Last Name"  name="lname" value="">
+            <% if(file === 0){ %>
+            <div class="invalid">*All fields are required!!</div>
+            <% } %>
+        </div>
+        <div class="form-group">
+            <label for="FormControlTextarea1">Address:</label>
+            <textarea class="form-control" id="FormControlTextarea1" rows="3" name="address" ></textarea>
+            <% if(file === 0){ %>
+            <div class="invalid">*All fields are required!!</div>
+            <% } %>
+        </div>
+        <div class="form-group">
+            <label for="isbn">Phone Number:</label>
+            <input class="form-control" type="number" placeholder="Phone Number"  name="phone" value="">
+            <% if(file === 0){ %>
+            <div class="invalid">*All fields are required!!</div>
+            <% } %>
+        </div>
+        <div class="form-group">
+            <label for="title">City</label>
+            <input class="form-control" type="text" placeholder="City"  name="city" value="">
+            <% if(file === 0){ %>
+            <div class="invalid">*All fields are required!!</div>
+            <% } %>
+        </div>
+        <div class="form-group">
+            <label for="title">State</label>
+            <input class="form-control" type="text" placeholder="State"  name="state" value="">
+            <% if(file === 0){ %>
+            <div class="invalid">*All fields are required!!</div>
+            <% } %>
+        </div>
+        <div class="form-group">
+            <label id="cash">Total Price : $<%= total %></label>
+        </div>
+        <div class="add">
+            <button type="submit" class="btn btn-dark">Proceed to Payment</button>
+        </div>
+    </form>  
 </main>
     <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
   </body>

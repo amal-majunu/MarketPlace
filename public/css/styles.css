@@ -5,15 +5,27 @@ body {
   }
   .container{
     margin : 20px auto;
+    background-color: white;
+  }
+  .container1{
+    margin : 20px auto;
+    background-color: white;
+    padding: 10px;
   }
 
   .content{
     display: inline-flex;
+    text-align: center;
     padding:10px;
   }
+  
   .profile{
     text-align: center;
     margin-top: 40px;
+  }
+  .profile1{
+    text-align: left;
+    margin-top: 30px;
   }
   .pic{
     margin-right: 10px;
@@ -29,6 +41,32 @@ body {
     text-align: left;
     font-size: 30px;
     list-style-type: none;
+  }
+  .det1{
+    text-align: left;
+    font-size: 15px;
+    list-style-type: none;
+  }
+  .det2{
+    text-align: left;
+    font-size: 24px;
+    list-style-type: none;
+  }
+  .cname{
+    border: 0;
+  }
+
+  .op{
+    padding:auto 6px;
+    margin: auto 5px;
+  }
+
+  .cart3{
+    display: inline-flex;
+  }
+  .check{
+    margin-top: 30px;
+    margin-left: 70px;
   }
 
   .bt {
@@ -190,4 +228,22 @@ body {
 .delete:active {
 	position:relative;
 	top:1px;
+}
+
+.alert{
+  margin : 15px auto;
+  font-size: 20px;
+  font-weight: bold;
+  color: darkgreen;
+  background-color: springgreen;
+  display: none;
+}
+
+#scart{
+  text-align: left;
+  margin-left: 30px;
+}
+
+#cash{
+  font-weight: bold;
 }
