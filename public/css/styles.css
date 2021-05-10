@@ -12,6 +12,33 @@ body {
     background-color: white;
     padding: 10px;
   }
+  .container4{
+    display: inline-flex;
+    margin : 20px 60px;
+    background-color: white;
+  }
+  
+  .last{
+    display: flex;
+    flex-direction: column;
+  }
+
+  #pay{
+    font-size: 50px;
+    color: green;
+  }
+  
+
+  #nope{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  }
+
+  .nobox{
+    border: 0;
+  }
+  .out{
+    font-size: 20px;
+  }
 
   .content{
     display: inline-flex;
@@ -246,4 +273,14 @@ body {
 
 #cash{
   font-weight: bold;
+}
+
+.tab{
+  text-align: center;
+  margin: auto;
+}
+table, th, td {
+  border-collapse: collapse;
+  border-radius: 10px;
+  padding: 5px 105px;
 }

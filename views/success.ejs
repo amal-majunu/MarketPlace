@@ -66,63 +66,38 @@
   </div>
 </nav>
 <main class="container">
-    <form action="/auth/success" method="POST" class="needs-validation" novalidate>
-        <div class="form-group">
-            <label for="title">First Name</label>
-            <input class="form-control" type="text" placeholder="First Name" name="fname" value="">
-            <% if(file === 0){ %>
-            <div class="invalid">*All fields are required!!</div>
-            <% } %>
+    <h1 id="pay">Payment Successful</h1>
+    <form action="/auth/buy" method="POST" class="needs-validation" id="done">
+        <h4 id="nope">Customer Details</h4>
+        <div class="out">
+            <label>Customer Name : </label>
+            <% let name =  doc.fname + " " +  doc.lname %>
+            <input class="nobox" type="text" name="name" value="<%= name %>" readonly>
         </div>
-        <div class="form-group">
-            <label for="title">Last Name</label>
-            <input class="form-control" type="text" placeholder="Last Name"  name="lname" value="">
-            <% if(file === 0){ %>
-            <div class="invalid">*All fields are required!!</div>
-            <% } %>
+        <div class="out">
+            <label for="FormControlTextarea1">Address : </label>
+            <textarea class="nobox" id="FormControlTextarea1" rows="5" name="address" readonly><%= doc.address %></textarea>
         </div>
-        <div class="form-group">
-            <label for="FormControlTextarea1">Address:</label>
-            <textarea class="form-control" id="FormControlTextarea1" rows="3" name="address" ></textarea>
-            <% if(file === 0){ %>
-            <div class="invalid">*All fields are required!!</div>
-            <% } %>
+        <div class="out">
+            <label>Phone : </label>
+            <input class="nobox" type="text" name="phone" value="<%= doc.phone %>" readonly>
         </div>
-        <div class="form-group">
-            <label for="isbn">Phone Number:</label>
-            <input class="form-control" type="number" placeholder="Phone Number"  name="phone" value="">
-            <% if(file === 0){ %>
-            <div class="invalid">*All fields are required!!</div>
-            <% } %>
+        <div class="out">
+            <label>City : </label>
+            <input class="nobox" type="text" name="city" value="<%= doc.city %>" readonly>
         </div>
-        <div class="form-group">
-            <label for="title">City</label>
-            <input class="form-control" type="text" placeholder="City"  name="city" value="">
-            <% if(file === 0){ %>
-            <div class="invalid">*All fields are required!!</div>
-            <% } %>
+        <div class="out">
+            <label>State : </label>
+            <input class="nobox" type="text" name="state" value="<%= doc.state %>" readonly>
         </div>
-        <div class="form-group">
-            <label for="title">State</label>
-            <input class="form-control" type="text" placeholder="State"  name="state" value="">
-            <% if(file === 0){ %>
-            <div class="invalid">*All fields are required!!</div>
-            <% } %>
-        </div>
-        <div class="form-group">
-            <label for="title">Country</label>
-            <input class="form-control" type="text" placeholder="Country"  name="country" value="">
-            <% if(file === 0){ %>
-            <div class="invalid">*All fields are required!!</div>
-            <% } %>
-        </div>
-        <div class="form-group">
-            <label id="cash">Total Price : $<%= total %></label>
+        <div class="out">
+            <label>Country : </label>
+            <input class="nobox" type="text" name="country" value="<%= doc.country %>" readonly>
         </div>
         <div class="add">
-            <button type="submit" class="btn btn-dark">Proceed to Payment</button>
+            <button type="submit" class="btn btn-dark">Generate Receipt</button>
         </div>
-    </form>  
+    </form>
 </main>
     <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
   </body>

@@ -5,6 +5,11 @@ const User = require("../models/user");
 const multer = require("multer");
 const cloudinary = require("cloudinary").v2;
 const Products = require("../models/Product");
+const easyinvoice = require("easyinvoice");
+const fs = require("fs");
+//const { pdf } = require('easyinvoice');
+const pdf = require("html-pdf");
+const options  = {format : 'A4'};
 
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
@@ -238,7 +243,27 @@ exports.editpro = async (req,res) => {
 
 exports.buy = async (req,res) => {
     try {
-        console.log(req.body);   
+        console.log(req.body);
+        let doc = req.body;  
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        today = dd + '/' + mm + '/' + yyyy;
+        res.render("paydone", {user:req.user, doc:doc,cart:req.user.cart,today:today}, (err,html) => {
+            let fn = './public/uploads/'+ req.user.username + '_' + dd+mm+yyyy + '.pdf';
+            pdf.create(html,options).toFile(fn,(err,result)=>{
+                if(err){
+                    console.log(err);
+                }else{
+                    var file = fs.readFileSync(fn);
+                    res.header('content-type','application/pdf');
+                    res.send(file);
+                    console.log('receipt generated');
+                }
+            });
+        });
+        // res.render("paydone", {user:req.user, doc:doc,cart:req.user.cart,today:today});
     } catch (err) {
         console.log(err);        
     }
@@ -263,3 +288,15 @@ exports.rcart = async(req,res) => {
         console.log(err);        
     }
 }
+
+exports.success = async (req,res) => {
+    try {
+        let doc = req.body;
+        res.render("success",{
+            doc : doc
+        });
+
+    } catch (err) {
+        console.log(err);        
+    }
+};

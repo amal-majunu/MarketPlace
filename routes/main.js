@@ -2,6 +2,7 @@ require('dotenv').config();
 const router = require("express").Router();
 const Products = require("../models/Product");
 
+
 router.get("/", (req,res)=>{
     res.render("home");
 });
@@ -13,6 +14,8 @@ router.get("/login", (req,res)=>{
 router.get("/register", (req,res)=>{
     res.render("register", {message:''});
 });
+
+
 
 router.get("/edit", (req,res)=>{
     let user = {
@@ -140,6 +143,14 @@ router.get("/add", (req,res)=>{
         res.redirect("/login");
     }
 });
+
+// router.get("/invoice", (req,res)=>{
+//     if(req.isAuthenticated()){
+//         res.render        
+//     }else{
+//         res.redirect("/login");
+//     }
+// });
 
 router.get("/logout", (req,res) =>{
     req.logout();
