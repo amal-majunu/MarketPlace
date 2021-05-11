@@ -74,6 +74,9 @@
         <div class="main1">
             <h3 id="scart">Shopping Cart</h3>
             <hr>
+            <% if(cart.length === 0){ %>
+              <h3>Cart is empty!!</h3>
+              <% } %>
             <% for(var i=0;i < cart.length ;i++){ %>
             <main class="container">
                 <div class="profile1">
@@ -95,7 +98,9 @@
                 </div>  
             </main>
             <% } %>
+            <% if(cart.length > 0){ %>
             <a href="/buy" class="addCart">Proceed to Buy</a>
+            <% } %>
         </div>   
     </main> 
 </div>   

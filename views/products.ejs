@@ -79,11 +79,18 @@
           <li>Name : <span class="det1"><%= doc.name %></span></li>
           <li>Price : $<span class="det1"><%= doc.price %></span></li>
           <li>Desc : <span class="det1"><%= doc.desc %></span></li>
+          <% if(doc.quan > 0){ %>
           <li>Quantity : <span class="det1"><%= doc.quan %></span></li>
+          <% } %>
           <li>Rating : <span class="det1"><%= doc.rating %></span></li>
           <li>Owner : <span class="det1"><%= doc.owner %></span></li>
         </ul>
+        <% if(doc.quan > 0){ %>
         <a href="/auth/addCart?id=<%= doc._id %>"  class="addCart">Add to Cart</a>
+        <% }else{ %>
+          <h4 id="nostock">No stock</h4>
+          <% } %>
+
       </div>
     </div>
     <% }); %>

@@ -118,8 +118,6 @@ exports.add = async (req,res)=>{
                     desc : desc,
                     price : price
                 };
-                req.user.products.push(product);
-                req.user.save();
 
                 let product1 = new Products({
                     imageURL : urlCreated,
@@ -250,13 +248,18 @@ exports.buy = async (req,res) => {
         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
         var yyyy = today.getFullYear();
         today = dd + '/' + mm + '/' + yyyy;
-        res.render("paydone", {user:req.user, doc:doc,cart:req.user.cart,today:today}, (err,html) => {
+        let cart = req.user.cart;
+        req.user.products.push(...cart);
+        req.user.cart = [];
+        req.user.save();
+        res.render("paydone", {user:req.user, doc:doc,cart:cart,today:today}, (err,html) => {
             let fn = './public/uploads/'+ req.user.username + '_' + dd+mm+yyyy + '.pdf';
             pdf.create(html,options).toFile(fn,(err,result)=>{
                 if(err){
                     console.log(err);
                 }else{
                     var file = fs.readFileSync(fn);
+                    
                     res.header('content-type','application/pdf');
                     res.send(file);
                     console.log('receipt generated');
@@ -292,6 +295,17 @@ exports.rcart = async(req,res) => {
 exports.success = async (req,res) => {
     try {
         let doc = req.body;
+        let cart = req.user.cart;
+        cart.forEach(item => {
+            Products.findOne({name : item.name, owner : item.owner}, (err,fnd)=>{
+                if(err){
+                    console.log(err);
+                }else {
+                    fnd.quan -=1;
+                    fnd.save();                    
+                }
+            });
+        });
         res.render("success",{
             doc : doc
         });

@@ -29,12 +29,19 @@ router.get("/edit", (req,res)=>{
 router.get("/main", (req,res)=>{
    if(req.isAuthenticated()){
        let prod = [];
+       let prod1 = req.user.products;
        Products.find({owner:req.user.username},(err,docs)=>{
            if(err){
                console.log(err);
            }else{
                prod = docs;
-               res.render("main", {message:'',user:req.user, prod:prod});
+               res.render("main", 
+               {
+                   message:'',
+                   user:req.user,
+                    prod:prod,
+                    prod1 : prod1
+            });
            }
        });
     }else{
@@ -71,14 +78,20 @@ router.get("/products", (req,res)=>{
             }else {
                 docs.forEach(doc => {
                     if(doc.owner !== req.user.username){
-                        let f = 1;
+                        let f = true;
                         let cart = req.user.cart;
                         cart.forEach(item => {
                             if(doc.name === item.name){
-                                f = 0;
+                                f = false;
                             }
                         });
-                        if(f===1){
+                        let prod1 = req.user.products;
+                        prod1.forEach(item => {
+                            if(doc.name === item.name){
+                                f = false
+                            }
+                        });
+                        if(f){
                             prod.push(doc);
                         }
                     }

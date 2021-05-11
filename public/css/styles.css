@@ -18,6 +18,10 @@ body {
     background-color: white;
   }
   
+  #nostock{
+    color: red;
+  }
+
   .last{
     display: flex;
     flex-direction: column;

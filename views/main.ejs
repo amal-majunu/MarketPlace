@@ -108,6 +108,23 @@
   <div class="prods">    
   </div>
 </main>
+<h1>Products Brought</h1>
+<main class="container1">
+  <div class="prods">
+    <% prod1.forEach(doc => { %>
+    <div class="pro">
+      <div class="pro-content">
+        <img src="<%= doc.imageURL %>" alt="img" height="190" width="190">
+        <ul class="prodet">
+          <li>Name : <span class="det1"><%= doc.name %></span></li>
+          <li>Price : <span class="det1"><%= doc.price %></span></li>
+          <li>Desc : <span class="det1"><%= doc.desc %></span></li>
+        </ul>
+      </div>
+    </div>
+    <% }); %>
+  </div> 
+</main>
     <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
   </body>
 </html>

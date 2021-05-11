@@ -67,7 +67,7 @@
 </nav>
 <main class="container">
     <h1 id="pay">Payment Successful</h1>
-    <form action="/auth/buy" method="POST" class="needs-validation" id="done">
+    <form action="/auth/buy" method="POST" class="needs-validation" id="done" target="_blank">
         <h4 id="nope">Customer Details</h4>
         <div class="out">
             <label>Customer Name : </label>
@@ -95,7 +95,7 @@
             <input class="nobox" type="text" name="country" value="<%= doc.country %>" readonly>
         </div>
         <div class="add">
-            <button type="submit" class="btn btn-dark">Generate Receipt</button>
+            <button type="submit" class="btn btn-dark" >Generate Receipt</button>
         </div>
     </form>
 </main>
