@@ -151,19 +151,11 @@ router.get("/buy", (req,res) =>{
 
 router.get("/add", (req,res)=>{
     if(req.isAuthenticated()){
-        res.render("add",{file:1,user:req.user});
+        res.render("add",{file:1,user:req.user,message : ''});
     }else{
         res.redirect("/login");
     }
 });
-
-// router.get("/invoice", (req,res)=>{
-//     if(req.isAuthenticated()){
-//         res.render        
-//     }else{
-//         res.redirect("/login");
-//     }
-// });
 
 router.get("/logout", (req,res) =>{
     req.logout();

@@ -37,6 +37,13 @@
         }
       }
     </style>
+    <% if(cart.length === 0){ %>
+      <style>
+        body{
+          background-color: white;
+        }
+      </style>
+      <% } %>
 
     
     <!-- Custom styles for this template -->
@@ -69,14 +76,16 @@
     </div>
   </div>
 </nav>
+<% if(cart.length === 0){ %>
+  <h3 id="emp">Cart is empty!!</h3>
+  <% } %>
+  <% if(cart.length > 0){ %>
 <div class="cart3">
     <main class="container1">
         <div class="main1">
             <h3 id="scart">Shopping Cart</h3>
             <hr>
-            <% if(cart.length === 0){ %>
-              <h3>Cart is empty!!</h3>
-              <% } %>
+      
             <% for(var i=0;i < cart.length ;i++){ %>
             <main class="container">
                 <div class="profile1">
@@ -104,33 +113,8 @@
         </div>   
     </main> 
 </div>   
-    <!-- <script type="text/javascript">
-        console.log(cart);
-        function add(id){
-            var fields = id.split(' ');
-            let price = document.getElementById('price'+fields[0]).innerHTML;
-            let total = document.getElementById("total");
-            console.log(total);
-            if(fields[1]==='+'){
-                console.log('add');
-                let quan = document.getElementById(fields[0]);
-                let x = Number(quan.innerHTML) + 1;
-                quan.innerHTML = String(x);
-                let p = Number(total.innerHTML) + Number(price);
-                total.innerHTML = String(p);
-                
-            }else{
-                let quan = document.getElementById(fields[0]);
-                if(Number(quan.innerHTML)>0){
-                let x = Number(quan.innerHTML) - 1;
-                quan.innerHTML = String(x);
-                let p = Number(total.innerHTML) - Number(price);
-                total.innerHTML = String(p);
-              
-                }
-            }
-        }
-    </script> -->
+<% } %>
+ 
     <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
   </body>
 </html>

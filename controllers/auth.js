@@ -3,6 +3,7 @@ require('dotenv').config();
 const passport = require("passport");
 const User = require("../models/user");
 const multer = require("multer");
+const mongoose = require("mongoose");
 const cloudinary = require("cloudinary").v2;
 const Products = require("../models/Product");
 const easyinvoice = require("easyinvoice");
@@ -103,35 +104,35 @@ exports.add = async (req,res)=>{
     let quan = req.body.quan;
     let desc = req.body.desc;  
     let price = req.body.price;
-    if(name === ""||desc === ""||quan === ""||price === ""||typeof(file) === "undefined"){
-        res.render("add", {file:0,user:req.user});
-    }else{
-        cloudinary.uploader.upload(req.file.path, async (err,result) => { 
-            if(err){
-                console.log(err);
+    Products.findOne({name : name, owner : req.user.username}, (err,doc)=>{
+        if(err){
+            console.log(err);
+        }else if(doc){
+            return res.render("add", {file:1,user:req.user,message : 'Item name is already present in your list'});
+        }else{
+            if(name === ""||desc === ""||quan === ""||price === ""||typeof(file) === "undefined"){
+                res.render("add", {file:0,user:req.user,message : ''});
             }else{
-                let urlCreated = result.secure_url;  
-                let product = {
-                    imageURL : urlCreated,
-                    name : name,
-                    quan : quan,
-                    desc : desc,
-                    price : price
-                };
-
-                let product1 = new Products({
-                    imageURL : urlCreated,
-                    name : name,
-                    quan : quan,
-                    desc : desc,
-                    price : price,
-                    owner : req.user.username
+                cloudinary.uploader.upload(req.file.path, async (err,result) => { 
+                    if(err){
+                        console.log(err);
+                    }else{
+                        let urlCreated = result.secure_url;  
+                        let product1 = new Products({
+                            imageURL : urlCreated,
+                            name : name,
+                            quan : quan,
+                            desc : desc,
+                            price : price,
+                            owner : req.user.username
+                        });
+                        product1.save();
+                        res.redirect("/main");
+                    }
                 });
-                product1.save();
-                res.redirect("/main");
             }
-        });
-    }
+        }        
+    });
 };
 
 exports.edit = async (req,res)=>{
@@ -140,7 +141,7 @@ exports.edit = async (req,res)=>{
         let email = req.body.email;
         let logo = req.body.type;  
         console.log(req.body);    
-        User.findOne({email : email},(err,doc)=>{
+        User.findOne({email : email, _id : { "$ne": mongoose.Types.ObjectId(req.user._id) }},(err,doc)=>{
             if(err){
                 console.log(err);
             }else if(doc){
@@ -150,7 +151,7 @@ exports.edit = async (req,res)=>{
                     message : 'Email already exists!!'
                 });
             }else{
-                User.findOne({username:username},(err,doc)=>{
+                User.findOne({username:username,_id : { "$ne": mongoose.Types.ObjectId(req.user._id) }},(err,doc)=>{
                     if(err){
                         console.log(err);
                     }else if(doc){
